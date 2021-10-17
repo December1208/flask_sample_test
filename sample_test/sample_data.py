@@ -1,6 +1,15 @@
 from typing import List, Union
+import json
+
 
 import sqlalchemy
+
+
+class SampleTestJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, SimpleDataField):
+            return str(o)
+        return super().default(o)
 
 
 class SampleData:
@@ -73,8 +82,8 @@ class SampleData:
 class SimpleDataField:
     def __init__(self, sample_data: SampleData, field: str):
         """
-        :param format_: 格式化字符串 ex: test_{}_format
-        :param values: 格式化字符串中需要的数据，ex: [(SampleData, field)]
+        :param sample_data: 样例数据
+        :param field: 要取的字段
         """
         self._sample_data = sample_data
         self._field = field
@@ -97,8 +106,8 @@ class ComplexDataField:
         self.relation: List[Union[SampleData, SimpleDataField]] = []
 
     def __str__(self):
-
-        return json.dumps(self.data, cls=SampleTestJSONEncoder)
+        result = json.dumps(self.data, cls=SampleTestJSONEncoder)
+        return json.loads(result)
 
     def _relation_simple_data(self, obj):
         if isinstance(obj, (str, float, int, bool)):
@@ -119,4 +128,9 @@ class ComplexDataField:
         for item in self.relation:
             item.init_instance()
 
+
+class SampleEnvironment(object):
+
+    def __init__(self, sample_data_list):
+        pass
 
