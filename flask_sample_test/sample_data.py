@@ -131,6 +131,20 @@ class ComplexDataField:
 
 class SampleEnvironment(object):
 
-    def __init__(self, sample_data_list):
-        pass
+    def __init__(self, db, sample_data_list):
+        self.db = db
+        self.sample_data_list = sample_data_list
 
+    def __enter__(self):
+        for ins in self.sample_data_list:
+            ins.create_instance()
+        self.db.session.commit()
+        self.db.session.close()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        for ins in self.sample_data_list:
+            ins.init_instance()
+        for table in reversed(self.db.metadata.sorted_tables):
+            self.db.session.query(table).delete()
+            self.db.session.commit()
+            self.db.session.close()

@@ -1,0 +1,2 @@
+sqlalchemy>=1.0
+flask_sqlalchemy>=1.0

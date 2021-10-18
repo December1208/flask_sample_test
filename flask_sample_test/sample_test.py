@@ -1,4 +1,5 @@
-from sqlalchemy.engine import reflection
+import sqlalchemy
+from flask_sample_test.sample_data import SampleEnvironment
 
 
 class SampleTest(object):
@@ -11,14 +12,11 @@ class SampleTest(object):
 
     def init_app(self, app, db=None):
         self.db = db or self.db
-        self.inspector = reflection.Inspector.from_engine(db.engine)
+        self.inspector = sqlalchemy.inspect(db.engine)
         if not hasattr(app, 'extensions'):
             app.extensions = {}
 
-        app.extensions['sample_test'] = self
-
+        app.extensions['flask_sample_test'] = self
 
     def create_env(self, sample_data_list):
-        pass
-
-
+        return SampleEnvironment(db=self.db, sample_data_list=sample_data_list)
