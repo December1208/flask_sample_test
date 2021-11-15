@@ -1,5 +1,5 @@
 import sqlalchemy
-from flask_sample_test.sample_data import SampleEnvironment
+from flask_sample_test.sample_data import SampleEnvironment, SampleData
 
 
 class SampleTest(object):
@@ -20,3 +20,6 @@ class SampleTest(object):
 
     def create_env(self, sample_data_list):
         return SampleEnvironment(db=self.db, sample_data_list=sample_data_list)
+
+    def create_sample_data(self, model, data):
+        return SampleData(model=model, data=data, db=self.db)
