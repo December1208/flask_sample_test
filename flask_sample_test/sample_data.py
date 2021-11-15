@@ -71,7 +71,7 @@ class SampleData:
         return getattr(self._instance, item, None)
 
     def __setattr__(self, key, value):
-        if key in ('_model', '_data', '_instance'):
+        if key in ('_model', '_data', '_instance', '_db', '_inspector'):
             super(SampleData, self).__setattr__(key, value)
             return
 
