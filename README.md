@@ -1,4 +1,6 @@
 # Sample Test
+## 说明
+用于构建单元测试环境
 ## Installing Flask-Sample-Test
 `pip install flask-sample-test`
 
