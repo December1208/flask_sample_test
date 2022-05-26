@@ -1,8 +1,6 @@
 import json
 from typing import List, Union
 
-import sqlalchemy
-
 
 class SampleTestJSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -15,17 +13,18 @@ class SampleTest(object):
     def __init__(self, app=None, db=None):
         self.app = app
         self.db = db
-        self.inspector = None
+        self.models = {}
+        self.config = {}
         if app is not None and db is not None:
             self.init_app(app, db)
 
     def init_app(self, app, db=None):
         self.db = db or self.db
-        self.inspector = sqlalchemy.inspect(db.engine)
         if not hasattr(app, 'extensions'):
             app.extensions = {}
-
+        self.models = {mapper.class_.__tablename__: mapper.class_ for mapper in db.Model.registry.mappers}
         app.extensions['flask_sample_test'] = self
+        app.config.setdefault('TEST_DATA_PATH', 'sample_data')
 
     def create_env(self, sample_data_list):
         return SampleEnvironment(sample_data_list=sample_data_list, bind=self)
@@ -46,11 +45,11 @@ class SampleData:
             return self._instance.id
         self._instance = self._model()
 
-        columns = self._bind.inspector.get_columns(self._model.__tablename__)
+        columns = self._model.__table__.columns
         for column in columns:
             column_name = column.get('name')
             column_nullable = column.get('nullable')
-            column_type = column.get("type")
+            column_type = column.get('type')
             column_default = column.get('default')
             if column_name == 'id':
                 continue
