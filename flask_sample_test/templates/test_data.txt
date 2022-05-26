@@ -1,0 +1,11 @@
+{% if is_empty_file %}
+import datetime
+from flask_sample_test import SampleData
+{{ import_model }}
+{%endif%}
+{% for data in mock_data %}
+data_{{loop.index}} = SampleData(
+    model={{model_name}},
+    data={{data}}
+)
+{% endfor %}

@@ -27,7 +27,7 @@ else:
 
 
 @SampleTestCommand.option('-m', '--model', dest='model_name')
-@SampleTestCommand.option('-q', '--quantity', dest='quantity')
+@SampleTestCommand.option('-q', '--quantity', dest='quantity', type=int)
 def create_sample_data(model_name, quantity):
     flask_sample_test: SampleTest = current_app.extensions['flask_sample_test']
     test_data_path = current_app.config['TEST_DATA_PATH']
