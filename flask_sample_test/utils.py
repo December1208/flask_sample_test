@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask_sample_test.sample_data import SampleEnvironment
+from flask_sample_test.sample_test import SampleEnvironment
 
 
 def with_env(env: SampleEnvironment):

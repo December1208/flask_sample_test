@@ -17,8 +17,8 @@ setup(
     author_email='jiale.gfi@outlook.com',  # Optional
     keywords='flask, test, sqlalchemy',  # Optional
     packages=find_packages(),  # Required
-    install_requires=['flask_sqlalchemy >= 1.0'],  # Optional
-    python_requires='>=3.6',
+    install_requires=['flask_sqlalchemy >= 2.0'],  # Optional
+    python_requires='>=3.7',
     classifiers=[
       "Programming Language :: Python :: 3",
       "License :: OSI Approved :: MIT License",
