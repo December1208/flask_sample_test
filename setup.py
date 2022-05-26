@@ -8,7 +8,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='flask-sample-test',  # Required
-    version='0.0.4',  # Required
+    version='0.0.5',  # Required
     description='A sample test for project',  # Optional
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
@@ -24,5 +24,6 @@ setup(
       "License :: OSI Approved :: MIT License",
       "Operating System :: OS Independent",
     ],
+    include_package_data=True,
 )
 
